@@ -35,6 +35,7 @@ uniform float4 _LightColor0;
 
 fixed4 _OutlineColor;
 half _Outline;
+int _UseOutlineColor;
 
 struct appdata
 {
@@ -116,6 +117,7 @@ float4 frag(v2f i) : COLOR
 
 v2f_silhouette vert_silhouette(appdata v, uint instanceID : SV_InstanceID)
 {
+	float4 c = 1;
 #if defined(SHADER_API_D3D11) && SHADER_TARGET >= 45
 	Particle p = _Particles[_Ids[instanceID]];
 	v.vertex.xyz *= (float)p.highlight;
@@ -131,13 +133,14 @@ v2f_silhouette vert_silhouette(appdata v, uint instanceID : SV_InstanceID)
 			v.normal = mul(_localToWorld, float4(v.normal, 0)).xyz;
 			v.vertex.xyz += _Outline * v.normal;
 			v.normal = normalize(v.normal);
+			c = p.color;
 		}
 	}
 #endif
 	v2f_silhouette o;
 	o.position = mul(UNITY_MATRIX_VP, v.vertex);
-	// o.color = p.color;
-	o.color = _OutlineColor;
+	if(_UseOutlineColor > 0) c = _OutlineColor;
+	o.color = c;
 	return o;
 }
 

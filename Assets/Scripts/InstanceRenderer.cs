@@ -16,12 +16,18 @@ public class InstanceRenderer : MonoBehaviour
     public List<InstanceGroup> instanceGroups = new List<InstanceGroup>();
     [SerializeField]
     Shader shader;
+    [SerializeField]
+    bool useOutlineColor = true;
+    [SerializeField]
+    Color outlineColor = Color.cyan;
 
     Material material_;
 
     void Awake()
     {
         material_ = new Material(shader);
+        material_.SetInt("_UseOutlineColor", useOutlineColor ? 1 : 0);
+        material_.SetColor("_OutlineColor", outlineColor);
     }
 
     void Update()

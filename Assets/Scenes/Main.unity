@@ -240,6 +240,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 867d537b2ee9d2844acd5740c5923cfb, type: 3}
+  useOutlineColor: 1
+  outlineColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!4 &1388564202
 Transform:
   m_ObjectHideFlags: 0
